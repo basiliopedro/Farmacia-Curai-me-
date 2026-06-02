@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mamadu — Restaurante Premium · Benguela</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --preto:       #0a0a0a;
+  --preto-med:   #141414;
+  --preto-card:  #1a1a1a;
+  --cinza:       #2a2a2a;
+  --cinza-med:   #3d3d3d;
+  --cinza-claro: #7a7a7a;
+  --dourado:     #c9a84c;
+  --dourado-light:#e2c06a;
+  --dourado-pale: rgba(201,168,76,.12);
+  --branco:      #ffffff;
+  --branco-soft: #f0ede8;
+  --texto-sec:   #a0a0a0;
+  --borda:       rgba(201,168,76,.2);
+  --radius:      10px;
+  --sombra:      0 4px 24px rgba(0,0,0,.4);
+  --sombra-gold: 0 4px 24px rgba(201,168,76,.15);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--preto);
+  color: var(--branco);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(10,10,10,.45);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(201,168,76,.15);
+  transition: background .4s;
+}
+header.scrolled { background: rgba(10,10,10,.92); }
+.header-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 32px; height: 70px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem; font-weight: 600;
+  color: var(--dourado); letter-spacing: 3px;
+  text-transform: uppercase; text-decoration: none;
+}
+.logo span { color: rgba(255,255,255,.6); font-weight: 300; font-size: 1rem; letter-spacing: 2px; display: block; margin-top: -4px; }
+nav { display: flex; align-items: center; gap: 36px; }
+nav a {
+  color: rgba(255,255,255,.65); text-decoration: none;
+  font-size: .8rem; font-weight: 500; letter-spacing: 1.8px;
+  text-transform: uppercase; transition: color .2s;
+}
+nav a:hover { color: var(--dourado); }
+.hamburger {
+  display: none; flex-direction: column; justify-content: center;
+  gap: 5px; width: 36px; height: 36px;
+  cursor: pointer; background: none; border: none; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 22px; height: 1.5px; background: var(--dourado);
+  border-radius: 1px; transition: transform .3s, opacity .3s, width .3s;
+  transform-origin: center;
+}
+.hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; width: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.mobile-nav {
+  display: none; flex-direction: column;
+  background: rgba(10,10,10,.97);
+  border-top: 1px solid var(--borda);
+  padding: 24px 32px 28px; gap: 20px;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  color: rgba(255,255,255,.7); text-decoration: none;
+  font-size: .9rem; font-weight: 500;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  transition: color .2s;
+}
+.mobile-nav a:hover { color: var(--dourado); }
+
+/* ── HERO FULLSCREEN ── */
+.hero {
+  position: relative; width: 100%; height: 100vh;
+  min-height: 600px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.pexels.com/photos/1307698/pexels-photo-1307698.jpeg?auto=compress&cs=tinysrgb&w=1400');
+  background-size: cover; background-position: center;
+  transform: scale(1.05);
+  animation: heroZoom 12s ease-in-out infinite alternate;
+}
+@keyframes heroZoom {
+  from { transform: scale(1.05); }
+  to   { transform: scale(1.12); }
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,.3) 0%,
+    rgba(10,10,10,.55) 50%,
+    rgba(10,10,10,.85) 100%
+  );
+}
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center; padding: 0 24px;
+}
+.hero-pre {
+  font-family: 'Jost', sans-serif;
+  font-size: .72rem; font-weight: 500;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 20px;
+  opacity: 0; animation: fadeUp .8s .3s forwards;
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4rem, 12vw, 9rem);
+  font-weight: 300; color: var(--branco);
+  line-height: 1; letter-spacing: 8px;
+  text-transform: uppercase;
+  opacity: 0; animation: fadeUp .9s .5s forwards;
+}
+.hero-line {
+  width: 60px; height: 1px;
+  background: var(--dourado);
+  margin: 28px auto;
+  opacity: 0; animation: fadeUp .8s .7s forwards;
+}
+.hero-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-weight: 300; font-style: italic;
+  color: rgba(255,255,255,.7);
+  letter-spacing: 1px;
+  opacity: 0; animation: fadeUp .8s .9s forwards;
+}
+.hero-cta {
+  margin-top: 40px;
+  opacity: 0; animation: fadeUp .8s 1.1s forwards;
+}
+.btn-gold {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: transparent;
+  border: 1px solid var(--dourado);
+  color: var(--dourado);
+  font-family: 'Jost', sans-serif;
+  font-size: .75rem; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  padding: 14px 36px; text-decoration: none;
+  transition: background .25s, color .25s, box-shadow .25s;
+}
+.btn-gold:hover {
+  background: var(--dourado); color: var(--preto);
+  box-shadow: var(--sombra-gold);
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-scroll {
+  position: absolute; bottom: 32px; left: 50%;
+  transform: translateX(-50%); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0; animation: fadeUp .8s 1.4s forwards;
+}
+.hero-scroll span {
+  font-size: .62rem; letter-spacing: 2.5px; text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+}
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--dourado), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: .4; transform: scaleY(1); }
+  50%       { opacity: 1;  transform: scaleY(1.2); }
+}
+
+/* ── APRESENTAÇÃO ── */
+.apresentacao {
+  padding: 100px 32px;
+  max-width: 800px; margin: 0 auto; text-align: center;
+}
+.sec-tag {
+  font-size: .68rem; font-weight: 500;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 20px; display: block;
+}
+.sec-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 300; color: var(--branco);
+  line-height: 1.3; margin-bottom: 24px; letter-spacing: .5px;
+}
+.sec-title em { font-style: italic; color: var(--dourado); }
+.sec-text {
+  font-size: .95rem; font-weight: 300;
+  color: var(--texto-sec); line-height: 1.9;
+}
+.gold-divider {
+  width: 40px; height: 1px;
+  background: var(--dourado); margin: 32px auto;
+  opacity: .6;
+}
+
+/* ── ESPECIALIDADES ── */
+#especialidades { padding: 80px 32px; background: var(--preto-med); }
+.container { max-width: 1200px; margin: 0 auto; }
+.sec-header { text-align: center; margin-bottom: 60px; }
+.especialidades-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.prato-card {
+  background: var(--preto-card);
+  border: 1px solid rgba(201,168,76,.12);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s;
+}
+.prato-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(201,168,76,.2);
+  border-color: rgba(201,168,76,.4);
+}
+/* Efeito de reflexo dourado */
+.prato-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(201,168,76,.18) 50%,
+    transparent 100%
+  );
+  transition: left .55s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+.prato-card:hover::after,
+.prato-card.touched::after {
+  left: 150%;
+}
+.prato-img {
+  width: 100%; height: 200px;
+  object-fit: cover; object-position: center; display: block;
+  transition: transform .4s ease;
+}
+.prato-card:hover .prato-img { transform: scale(1.05); }
+.prato-body { padding: 18px 20px 22px; }
+.prato-categoria {
+  font-size: .62rem; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 8px;
+}
+.prato-nome {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; font-weight: 600;
+  color: var(--branco); margin-bottom: 8px; line-height: 1.3;
+}
+.prato-desc {
+  font-size: .78rem; font-weight: 300;
+  color: var(--texto-sec); line-height: 1.7;
+}
+
+/* ── SECÇÃO RESERVA / PEDIDO ── */
+#acoes { padding: 100px 32px; background: var(--preto); }
+.acoes-inner { max-width: 680px; margin: 0 auto; text-align: center; }
+.acoes-btns {
+  display: flex; gap: 16px; justify-content: center;
+  margin-top: 48px; flex-wrap: wrap;
+}
+.btn-acao {
+  flex: 1; min-width: 180px; max-width: 240px;
+  padding: 16px 24px;
+  font-family: 'Jost', sans-serif;
+  font-size: .78rem; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: 1px solid var(--dourado);
+  cursor: pointer; transition: all .25s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-acao.reservar {
+  background: var(--dourado); color: var(--preto);
+}
+.btn-acao.reservar:hover { background: var(--dourado-light); }
+.btn-acao.pedir {
+  background: transparent; color: var(--dourado);
+}
+.btn-acao.pedir:hover { background: var(--dourado-pale); }
+.btn-acao.active-btn {
+  box-shadow: 0 0 0 2px var(--dourado), var(--sombra-gold);
+}
+
+/* Formulários */
+.form-wrapper {
+  max-width: 680px; margin: 0 auto;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .5s ease, opacity .4s ease, margin-top .4s;
+  opacity: 0;
+}
+.form-wrapper.open {
+  max-height: 1200px; opacity: 1; margin-top: 32px;
+}
+.form-card {
+  background: var(--preto-card);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+}
+.form-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 600;
+  color: var(--dourado); margin-bottom: 28px;
+  letter-spacing: .5px;
+}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label {
+  font-size: .68rem; font-weight: 600;
+  letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--cinza-claro);
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  background: var(--cinza);
+  border: 1px solid rgba(201,168,76,.15);
+  border-radius: 6px;
+  color: var(--branco);
+  font-family: 'Jost', sans-serif;
+  font-size: .88rem; font-weight: 300;
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color .2s;
+  width: 100%;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--dourado);
+}
+.form-group textarea { resize: vertical; min-height: 90px; }
+.form-group select option { background: var(--cinza); }
+.btn-enviar {
+  width: 100%; margin-top: 24px;
+  padding: 15px;
+  background: var(--dourado); color: var(--preto);
+  font-family: 'Jost', sans-serif;
+  font-size: .78rem; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  border: none; border-radius: 6px; cursor: pointer;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-enviar:hover {
+  background: var(--dourado-light);
+  transform: translateY(-1px);
+  box-shadow: var(--sombra-gold);
+}
+
+/* Morada condicional */
+.morada-row { display: none; }
+.morada-row.visible { display: flex; flex-direction: column; gap: 6px; }
+
+/* ── IMAGEM DO ESPAÇO ── */
+.espaco-img {
+  width: 100%; height: 520px;
+  object-fit: cover; object-position: center; display: block;
+  filter: brightness(.82) saturate(1.1);
+}
+.espaco-caption {
+  background: var(--preto-med);
+  text-align: center; padding: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-style: italic; font-weight: 300;
+  color: var(--texto-sec); letter-spacing: 1px;
+}
+
+/* ── LOCALIZAÇÃO ── */
+#localizacao { padding: 80px 32px; background: var(--preto-med); }
+.loc-grid {
+  display: grid; grid-template-columns: 1fr 1.5fr;
+  gap: 48px; align-items: start;
+  max-width: 1100px; margin: 0 auto;
+}
+.loc-info { display: flex; flex-direction: column; gap: 28px; }
+.loc-item { display: flex; align-items: flex-start; gap: 16px; }
+.loc-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--dourado);
+}
+.loc-text h4 {
+  font-size: .7rem; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 5px;
+}
+.loc-text p, .loc-text a {
+  font-size: .88rem; font-weight: 300;
+  color: var(--texto-sec); text-decoration: none;
+  display: block; line-height: 1.7; transition: color .2s;
+}
+.loc-text a:hover { color: var(--dourado); }
+.loc-map {
+  border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--borda);
+  box-shadow: var(--sombra);
+}
+.loc-map iframe { width: 100%; height: 340px; border: none; display: block; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--preto);
+  border-top: 1px solid rgba(201,168,76,.12);
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 56px 32px 36px;
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 48px;
+}
+.footer-brand .logo { font-size: 1.4rem; }
+.footer-brand p {
+  font-size: .82rem; font-weight: 300;
+  color: var(--cinza-claro); margin-top: 14px;
+  line-height: 1.8; max-width: 220px;
+}
+.footer-wa {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; border: 1px solid var(--dourado);
+  color: var(--dourado);
+  font-family: 'Jost', sans-serif;
+  font-size: .72rem; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 12px 22px; text-decoration: none;
+  margin-top: 20px; border-radius: 4px;
+  transition: background .2s, color .2s;
+}
+.footer-wa:hover { background: var(--dourado); color: var(--preto); }
+.footer-col h4 {
+  font-size: .65rem; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 16px;
+}
+.footer-col a, .footer-col p {
+  display: block; font-size: .82rem; font-weight: 300;
+  color: var(--cinza-claro); text-decoration: none;
+  margin-bottom: 9px; transition: color .2s;
+}
+.footer-col a:hover { color: var(--dourado); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.05);
+  padding: 20px 32px; max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-bottom p {
+  font-size: .72rem; font-weight: 300; color: var(--cinza-med);
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1000px) {
+  .especialidades-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  nav { display: none; }
+  .hamburger { display: flex; }
+  .loc-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+  .footer-brand p { max-width: 100%; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-group.full { grid-column: 1; }
+}
+@media (max-width: 480px) {
+  .especialidades-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  .acoes-btns { flex-direction: column; align-items: center; }
+  .btn-acao { max-width: 100%; width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      Mamadu
+      <span>Restaurante · Benguela</span>
+    </a>
+    <nav>
+      <a href="#especialidades">Menu</a>
+      <a href="#acoes">Reservas</a>
+      <a href="#localizacao">Localização</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#especialidades" onclick="closeMobileNav()">Menu</a>
+    <a href="#acoes" onclick="closeMobileNav()">Reservas</a>
+    <a href="#localizacao" onclick="closeMobileNav()">Localização</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-pre">Restaurante Premium · Benguela</div>
+    <h1>Mamadu</h1>
+    <div class="hero-line"></div>
+    <p class="hero-sub">Uma experiência gastronómica que permanece na memória</p>
+    <div class="hero-cta">
+      <a href="#especialidades" class="btn-gold">Descobrir o Menu</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- APRESENTAÇÃO -->
+<section>
+  <div class="apresentacao reveal">
+    <span class="sec-tag">Sobre nós</span>
+    <h2 class="sec-title">Onde cada refeição<br>se torna uma <em>ocasião especial</em></h2>
+    <div class="gold-divider"></div>
+    <p class="sec-text">O Mamadu nasceu da paixão pela gastronomia e pelo encontro. Situado no coração de Benguela, o nosso restaurante combina ingredientes frescos, técnica apurada e um ambiente que convida a ficar. Cada prato conta uma história. Cada visita cria uma memória.</p>
+  </div>
+</section>
+
+<!-- ESPECIALIDADES -->
+<section id="especialidades">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-tag">O nosso menu</span>
+      <h2 class="sec-title">Especialidades da Casa</h2>
+      <div class="gold-divider"></div>
+    </div>
+    <div class="especialidades-grid">
+
+      <div class="prato-card reveal">
+        <img class="prato-img" src="https://images.pexels.com/photos/299347/pexels-photo-299347.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Peixe grelhado">
+        <div class="prato-body">
+          <div class="prato-categoria">Peixe</div>
+          <div class="prato-nome">Peixe Grelhado da Costa</div>
+          <div class="prato-desc">Peixe fresco do dia, grelhado na brasa com manteiga de ervas e limão. Servido com legumes salteados.</div>
+        </div>
+      </div>
+
+      <div class="prato-card reveal">
+        <img class="prato-img" src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Frango assado">
+        <div class="prato-body">
+          <div class="prato-categoria">Aves</div>
+          <div class="prato-nome">Frango ao Molho de Amendoim</div>
+          <div class="prato-desc">Frango macio marinado em especiarias, cozinhado lentamente com molho de amendoim e coco.</div>
+        </div>
+      </div>
+
+      <div class="prato-card reveal">
+        <img class="prato-img" src="https://images.pexels.com/photos/1251208/pexels-photo-1251208.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Bife premium">
+        <div class="prato-body">
+          <div class="prato-categoria">Carnes</div>
+          <div class="prato-nome">Bife ao Ponto da Casa</div>
+          <div class="prato-desc">Corte nobre de vaca, selado na frigideira de ferro com alho, tomilho e manteiga dourada.</div>
+        </div>
+      </div>
+
+      <div class="prato-card reveal">
+        <img class="prato-img" src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Camarão">
+        <div class="prato-body">
+          <div class="prato-categoria">Marisco</div>
+          <div class="prato-nome">Camarão Tigre Salteado</div>
+          <div class="prato-desc">Camarão jumbo salteado em azeite, alho e piri-piri. Um clássico do nosso menu que nunca decepciona.</div>
+        </div>
+      </div>
+
+      <div class="prato-card reveal">
+        <img class="prato-img" src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Funge com muamba">
+        <div class="prato-body">
+          <div class="prato-categoria">Angolano</div>
+          <div class="prato-nome">Muamba de Galinha</div>
+          <div class="prato-desc">Receita tradicional angolana com galinha, dendém, quiabo e especiarias. Servida com funge e arroz.</div>
+        </div>
+      </div>
+
+      <div class="prato-card reveal">
+        <img class="prato-img" src="https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Massa premium">
+        <div class="prato-body">
+          <div class="prato-categoria">Internacional</div>
+          <div class="prato-nome">Massa ao Fruto do Mar</div>
+          <div class="prato-desc">Tagliatelle artesanal com camarão, mexilhão e amêijoas em molho de tomate fresco e manjericão.</div>
+        </div>
+      </div>
+
+      <div class="prato-card reveal">
+        <img class="prato-img" src="https://images.pexels.com/photos/1633578/pexels-photo-1633578.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Sobremesa">
+        <div class="prato-body">
+          <div class="prato-categoria">Sobremesa</div>
+          <div class="prato-nome">Pudim de Maracujá</div>
+          <div class="prato-desc">Pudim cremoso de maracujá fresco, com calda de fruta da época e raspas de limão.</div>
+        </div>
+      </div>
+
+      <div class="prato-card reveal">
+        <img class="prato-img" src="https://images.pexels.com/photos/1438672/pexels-photo-1438672.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Salada premium">
+        <div class="prato-body">
+          <div class="prato-categoria">Entrada</div>
+          <div class="prato-nome">Salada Mamadu</div>
+          <div class="prato-desc">Folhas frescas, tomate cherry, abacate, queijo de cabra e vinagrete de mel e mostarda antiga.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RESERVA / PEDIDO -->
+<section id="acoes">
+  <div class="acoes-inner">
+    <span class="sec-tag reveal">Mesa ou entrega</span>
+    <h2 class="sec-title reveal">Como prefere?</h2>
+    <div class="gold-divider reveal"></div>
+    <p class="sec-text reveal">Reserve a sua mesa para uma experiência completa ou faça o seu pedido com entrega ao domicílio. Confirmamos em minutos pelo WhatsApp.</p>
+
+    <div class="acoes-btns">
+      <button class="btn-acao reservar" id="btn-reservar" onclick="toggleForm('reservar')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Reservar Mesa
+      </button>
+      <button class="btn-acao pedir" id="btn-pedir" onclick="toggleForm('pedir')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Fazer Pedido
+      </button>
+    </div>
+
+    <!-- FORMULÁRIO RESERVA -->
+    <div class="form-wrapper" id="form-reservar">
+      <div class="form-card">
+        <div class="form-title">Reservar Mesa</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nome completo *</label>
+            <input type="text" id="res-nome" placeholder="O seu nome" required>
+          </div>
+          <div class="form-group">
+            <label>Nº de pessoas *</label>
+            <input type="number" id="res-pessoas" min="1" max="20" placeholder="Ex: 4" required>
+          </div>
+          <div class="form-group">
+            <label>Data *</label>
+            <input type="date" id="res-data" required>
+          </div>
+          <div class="form-group">
+            <label>Hora pretendida *</label>
+            <input type="text" id="res-hora" placeholder="Ex: 20h00" required>
+          </div>
+          <div class="form-group full">
+            <label>Observações *</label>
+            <textarea id="res-obs" placeholder="Aniversário, intolerâncias alimentares, pedido especial..." required></textarea>
+          </div>
+        </div>
+        <button class="btn-enviar" onclick="enviarReserva()">
+          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Confirmar via WhatsApp
+        </button>
+      </div>
+    </div>
+
+    <!-- FORMULÁRIO PEDIDO -->
+    <div class="form-wrapper" id="form-pedir">
+      <div class="form-card">
+        <div class="form-title">Fazer Pedido</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nome completo *</label>
+            <input type="text" id="ped-nome" placeholder="O seu nome" required>
+          </div>
+          <div class="form-group">
+            <label>Telefone de contacto *</label>
+            <input type="tel" id="ped-tel" placeholder="9XX XXX XXX" required>
+          </div>
+          <div class="form-group full">
+            <label>Tipo de pedido *</label>
+            <select id="ped-tipo" onchange="toggleMorada(this.value)" required>
+              <option value="">Seleccione...</option>
+              <option value="Entrega ao domicílio">Entrega ao domicílio</option>
+              <option value="Takeaway (levantar no restaurante)">Takeaway</option>
+            </select>
+          </div>
+          <div class="form-group full morada-row" id="morada-row">
+            <label>Morada de entrega *</label>
+            <input type="text" id="ped-morada" placeholder="Rua, bairro, referência...">
+          </div>
+          <div class="form-group full">
+            <label>O que deseja pedir? *</label>
+            <textarea id="ped-items" placeholder="Descreva os pratos, quantidades e qualquer preferência..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label>Hora pretendida *</label>
+            <input type="text" id="ped-hora" placeholder="Ex: 19h30" required>
+          </div>
+          <div class="form-group full">
+            <label>Observações / Alergias *</label>
+            <textarea id="ped-obs" placeholder="Alergias, intolerâncias, pedidos especiais..." required></textarea>
+          </div>
+        </div>
+        <button class="btn-enviar" onclick="enviarPedido()">
+          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Enviar Pedido via WhatsApp
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- IMAGEM DO ESPAÇO -->
+<div class="reveal">
+  <img class="espaco-img" src="https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Interior do Restaurante Mamadu">
+  <div class="espaco-caption">O nosso espaço — onde o ambiente é parte da experiência</div>
+</div>
+
+<!-- LOCALIZAÇÃO -->
+<section id="localizacao">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-tag">Onde estamos</span>
+      <h2 class="sec-title">Localização</h2>
+      <div class="gold-divider"></div>
+    </div>
+    <div class="loc-grid">
+      <div class="loc-info">
+
+        <div class="loc-item reveal">
+          <div class="loc-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="loc-text">
+            <h4>Endereço</h4>
+            <p>Rua Domingos do Ó</p>
+            <p>Benguela, Angola</p>
+          </div>
+        </div>
+
+        <div class="loc-item reveal">
+          <div class="loc-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7A2 2 0 012.18 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.46-1.46a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+          </div>
+          <div class="loc-text">
+            <h4>Telefone</h4>
+            <a href="tel:+244912345678">+244 912 345 678</a>
+          </div>
+        </div>
+
+        <div class="loc-item reveal">
+          <div class="loc-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <div class="loc-text">
+            <h4>WhatsApp</h4>
+            <a href="https://wa.me/244925390640" target="_blank">+244 925 390 640</a>
+          </div>
+        </div>
+
+        <div class="loc-item reveal">
+          <div class="loc-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="loc-text">
+            <h4>Horário</h4>
+            <p>Segunda a Domingo</p>
+            <p>12h00 – 00h00</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="loc-map reveal">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31314.1!2d13.4082!3d-12.5763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a3fbe44d8b1b79f%3A0x7a8a2b6f6e5c3d1a!2sBenguela!5e0!3m2!1spt!2sao!4v1700000000000"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localização Restaurante Mamadu, Benguela">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="logo">Mamadu</a>
+      <p>Restaurante premium no coração de Benguela. Uma experiência gastronómica que permanece na memória.</p>
+      <a href="https://wa.me/244925390640?text=Olá%2C%20vi%20o%20vosso%20site%20e%20quero%20mais%20informações%20sobre%20o%20Restaurante%20Mamadu." target="_blank" class="footer-wa">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar no WhatsApp
+      </a>
+    </div>
+    <div class="footer-col">
+      <h4>Menu</h4>
+      <a href="#especialidades">Especialidades</a>
+      <a href="#acoes">Reservar Mesa</a>
+      <a href="#acoes">Fazer Pedido</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <p>Rua Domingos do Ó, Benguela</p>
+      <a href="tel:+244912345678">+244 912 345 678</a>
+      <a href="https://wa.me/244925390640" target="_blank">WhatsApp</a>
+      <p style="margin-top:8px">Seg–Dom · 12h–00h</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Restaurante Mamadu. Todos os direitos reservados.</p>
+    <p>Benguela, Angola</p>
+  </div>
+</footer>
+
+<script>
+// Header scroll
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Hamburger
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  mobileNav.classList.toggle('open');
+});
+function closeMobileNav() {
+  hamburger.classList.remove('active');
+  mobileNav.classList.remove('open');
+}
+
+// Touch shine nos cards (mobile)
+document.querySelectorAll('.prato-card').forEach(card => {
+  card.addEventListener('touchstart', () => {
+    card.classList.add('touched');
+    setTimeout(() => card.classList.remove('touched'), 700);
+  }, { passive: true });
+});
+
+// Formulários — só um aberto de cada vez
+function toggleForm(tipo) {
+  const formReservar = document.getElementById('form-reservar');
+  const formPedir    = document.getElementById('form-pedir');
+  const btnReservar  = document.getElementById('btn-reservar');
+  const btnPedir     = document.getElementById('btn-pedir');
+
+  if (tipo === 'reservar') {
+    const isOpen = formReservar.classList.contains('open');
+    formReservar.classList.toggle('open', !isOpen);
+    formPedir.classList.remove('open');
+    btnReservar.classList.toggle('active-btn', !isOpen);
+    btnPedir.classList.remove('active-btn');
+  } else {
+    const isOpen = formPedir.classList.contains('open');
+    formPedir.classList.toggle('open', !isOpen);
+    formReservar.classList.remove('open');
+    btnPedir.classList.toggle('active-btn', !isOpen);
+    btnReservar.classList.remove('active-btn');
+  }
+}
+
+// Morada condicional
+function toggleMorada(val) {
+  const row = document.getElementById('morada-row');
+  const input = document.getElementById('ped-morada');
+  if (val === 'Entrega ao domicílio') {
+    row.classList.add('visible');
+    input.required = true;
+  } else {
+    row.classList.remove('visible');
+    input.required = false;
+  }
+}
+
+// Validar e enviar reserva
+function enviarReserva() {
+  const nome    = document.getElementById('res-nome').value.trim();
+  const pessoas = document.getElementById('res-pessoas').value.trim();
+  const data    = document.getElementById('res-data').value;
+  const hora    = document.getElementById('res-hora').value.trim();
+  const obs     = document.getElementById('res-obs').value.trim();
+
+  if (!nome || !pessoas || !data || !hora || !obs) {
+    alert('Por favor, preencha todos os campos obrigatórios.');
+    return;
+  }
+
+  const dataFormatada = new Date(data).toLocaleDateString('pt-PT', {
+    day: '2-digit', month: 'long', year: 'numeric'
+  });
+
+  const msg = `Olá, Restaurante Mamadu! Gostaria de reservar uma mesa.
+
+• Nome: ${nome}
+• Nº de pessoas: ${pessoas}
+• Data: ${dataFormatada}
+• Hora: ${hora}
+• Observações: ${obs}
+
+Aguardo confirmação. Obrigado.`;
+
+  window.open(`https://wa.me/244925390640?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// Validar e enviar pedido
+function enviarPedido() {
+  const nome   = document.getElementById('ped-nome').value.trim();
+  const tel    = document.getElementById('ped-tel').value.trim();
+  const tipo   = document.getElementById('ped-tipo').value;
+  const morada = document.getElementById('ped-morada').value.trim();
+  const items  = document.getElementById('ped-items').value.trim();
+  const hora   = document.getElementById('ped-hora').value.trim();
+  const obs    = document.getElementById('ped-obs').value.trim();
+
+  if (!nome || !tel || !tipo || !items || !hora || !obs) {
+    alert('Por favor, preencha todos os campos obrigatórios.');
+    return;
+  }
+  if (tipo === 'Entrega ao domicílio' && !morada) {
+    alert('Por favor, indique a morada de entrega.');
+    return;
+  }
+
+  const moradaLinha = tipo === 'Entrega ao domicílio'
+    ? `• Morada: ${morada}\n` : '';
+
+  const msg = `Olá, Restaurante Mamadu! Quero fazer um pedido.
+
+• Nome: ${nome}
+• Contacto: ${tel}
+• Tipo: ${tipo}
+${moradaLinha}• Pedido: ${items}
+• Hora pretendida: ${hora}
+• Observações: ${obs}
+
+Aguardo confirmação. Obrigado.`;
+
+  window.open(`https://wa.me/244925390640?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>
